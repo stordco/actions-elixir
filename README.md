@@ -9,15 +9,15 @@ operations - setup, dependency retrieval, etc.
 
 ## Usage
 ```yaml
-  - uses: stordco/actions-elixir/setup@v0.0
+  - uses: stordco/actions-elixir/setup@v0.1
     with:
-      elixir-version: 1.13.4
+      elixir_version: 1.13.4
       github_personal_access_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
-      otp-version: 25.0
+      otp_version: 25.0
 ```
 
 ## Inputs
 - `cache_path` - (Optional) Override default paths to cache
-- `elixir-version` - Specify Elixir version
+- `elixir_version` - Specify Elixir version
 - `github_personal_access_token` - (Optional) Usually `secrets.GITHUB_PERSONAL_ACCESS_TOKEN`, to setup git for mix dep retrieval
-- `otp-version` - Specify OTP version
+- `otp_version` - Specify OTP version
