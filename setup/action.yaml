@@ -1,4 +1,4 @@
-name: actions-elixir//setup
+name: actions-elixir/setup
 
 branding:
   color: blue
@@ -15,34 +15,37 @@ inputs:
       deps
     description: Override default paths to cache
     type: string
-  elixir-version:
+  elixir_version:
+    description: Elixir version (ex: 1.13.4)
+    required: true
     type: string
   github_personal_access_token:
     default: null
-    description: (Optional) Usually `secrets.GITHUB_PERSONAL_ACCESS_TOKEN`, to setup git for mix dep retrieval
+    description: >-
+      (Optional) Used to set git up for mix dep retrieval from private repos,
+      usually `secrets.GITHUB_PERSONAL_ACCESS_TOKEN`
     type: string
-  otp-version:
+  otp_version:
+    description: OTP version (ex: "25.0")
+    required: true
     type: string
-
-
 
 runs:
-  using: composite
   steps:
       - name: Install (Elixir)
         id: beam
         uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{ inputs.otp-version }}
-          elixir-version: ${{ inputs.elixir-version }}
+          otp-version: ${{ inputs.otp_version }}
+          elixir-version: ${{ inputs.elixir_version }}
 
       - name: Cache
-        uses: actions/cache@v2
         id: cache
+        uses: actions/cache@v2
         with:
           key: elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-${{ hashFiles('mix.lock') }}-${{ github.ref }}
           restore-keys: |
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-${{ hashFiles('mix.lock') }}-refs/heads/main
+            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-${{ hashFiles('mix.lock') }}-refs/heads/${{ github.event.repository.default_branch }}
             elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-${{ hashFiles('mix.lock') }}-
             elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-
             elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-
@@ -51,11 +54,16 @@ runs:
       - name: Setup (Mix)
         if: inputs.github_personal_access_token != null
         run: |
-          # git config - setup for mix
-          git config --global url."https://${{ inputs.github_personal_access_token }}:@github.com".insteadOf "https://github.com"
+          # git config - add GitHub token
+          git \
+            config \
+            --global \
+            url."https://${{ inputs.github_personal_access_token }}:@github.com".insteadOf \
+            "https://github.com"
         shell: bash
 
       - name: Install (Mix)
         if: steps.cache.outputs.cache-hit != 'true'
         run: mix deps.get
         shell: bash
+  using: composite
