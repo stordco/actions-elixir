@@ -14,6 +14,12 @@ inputs:
       _build
       deps
     description: Override default paths to cache
+    required: false
+    type: string
+  cache_name:
+    default: credo
+    description: Override the default cache name used in the key
+    required: false
     type: string
   elixir_version:
     description: 'Elixir version (ex: 1.13.4)'
@@ -21,6 +27,7 @@ inputs:
     type: string
   github_personal_access_token:
     default: null
+    required: false
     description: >-
       (Optional) Used to set git up for mix dep retrieval from private repos,
       usually `secrets.GITHUB_PERSONAL_ACCESS_TOKEN`
@@ -43,11 +50,11 @@ runs:
         id: cache
         uses: actions/cache@v2
         with:
-          key: elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-${{ hashFiles('mix.lock') }}-${{ github.ref }}
+          key: elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-${{ github.ref }}
           restore-keys: |
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-${{ hashFiles('mix.lock') }}-refs/heads/${{ github.event.repository.default_branch }}
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-${{ hashFiles('mix.lock') }}-
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-credo-
+            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-refs/heads/${{ github.event.repository.default_branch }}
+            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-
+            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-
             elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-
           path: ${{ inputs.cache_path }}
 
