@@ -1,0 +1,7 @@
+{
+  "separate-pull-requests": false,
+  "draft-pull-request": true,
+  "packages": {
+    "setup": {}
+  }
+}
