@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/stordco/actions-elixir/compare/v1.0.0...v1.0.1) (2022-09-09)
+
+
+### Bug Fixes
+
+* update release workflow ([0b785de](https://github.com/stordco/actions-elixir/commit/0b785de68dd00e704fa75b4df88a8bbf41d97222))
+
 ## [1.0.0](https://github.com/stordco/actions-elixir/compare/v0.1.2...v1.0.0) (2022-09-09)
 
 
