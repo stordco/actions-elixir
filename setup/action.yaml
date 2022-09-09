@@ -87,40 +87,40 @@ outputs:
 runs:
   using: composite
   steps:
-      - id: versions
-        if: ${{ !inputs.elixir_version || !inputs.otp_version }}
-        name: Read .tool-versions
-        uses: marocchino/tool-versions-action@f54c9de89a72df2e14c307f35ea698e0745b6ad3
+    - id: versions
+      if: ${{ !inputs.elixir_version || !inputs.otp_version }}
+      name: Read .tool-versions
+      uses: marocchino/tool-versions-action@f54c9de89a72df2e14c307f35ea698e0745b6ad3
 
-      - id: beam
-        name: Install Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          otp-version: ${{ inputs.otp_version || steps.versions.outputs.otp }}
-          elixir-version: ${{ inputs.elixir_version || steps.versions.outputs.elixir }}
+    - id: beam
+      name: Install Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        otp-version: ${{ inputs.otp_version || steps.versions.outputs.otp }}
+        elixir-version: ${{ inputs.elixir_version || steps.versions.outputs.elixir }}
 
-      - id: cache
-        name: Cache
-        uses: actions/cache@v3
-        with:
-          key: elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-${{ github.ref }}
-          restore-keys: |
-            elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-
-            elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-
-            elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-
-          path: ${{ inputs.cache_path }}
+    - id: cache
+      name: Cache
+      uses: actions/cache@v3
+      with:
+        key: elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-${{ github.ref }}
+        restore-keys: |
+          elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-
+          elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-
+          elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-
+        path: ${{ inputs.cache_path }}
 
-      - if: ${{ inputs.github_token }}
-        name: Setup GitHub Auth
-        run: git config --global url."https://x-access-token:${{ inputs.github_token }}@github.com".insteadOf "https://github.com"
-        shell: bash
+    - if: ${{ inputs.github_token }}
+      name: Setup GitHub Auth
+      run: git config --global url."https://x-access-token:${{ inputs.github_token }}@github.com".insteadOf "https://github.com"
+      shell: bash
 
-      - if: ${{ inputs.hex_token }}
-        name: Setup Hex Auth
-        run: mix hex.organization auth "${{ inputs.hex_organization }}" --key "${{ inputs.hex_token }}"
-        shell: bash
+    - if: ${{ inputs.hex_token }}
+      name: Setup Hex Auth
+      run: mix hex.organization auth "${{ inputs.hex_organization }}" --key "${{ inputs.hex_token }}"
+      shell: bash
 
-      - if: steps.cache.outputs.cache-hit != 'true'
-        name: Install Dependencies
-        run: mix deps.get
-        shell: bash
+    - if: steps.cache.outputs.cache-hit != 'true'
+      name: Install Dependencies
+      run: mix deps.get
+      shell: bash
