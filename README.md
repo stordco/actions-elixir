@@ -13,7 +13,7 @@ For basic usage, you don't have to specify anything! Just drop this file in your
 <!-- {x-release-please-start-version} -->
 ```yaml
   - name: Setup Elixir
-    uses: stordco/actions-elixir/setup@v0.1.2
+    uses: stordco/actions-elixir/setup@v1.0.0
 ```
 <!-- {x-release-please-end} -->
 
@@ -22,7 +22,7 @@ But some times it's not that simple. If you are using a private package from Git
 <!-- {x-release-please-start-version} -->
 ```yaml
   - name: Setup Elixir
-    uses: stordco/actions-elixir/setup@v0.1.2
+    uses: stordco/actions-elixir/setup@v1.0.0
     with:
       github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
       hex-token: ${{ secrets.HEX_API_KEY }}
@@ -34,7 +34,7 @@ If you are not using [`asdf`](https://asdf-vm.com/) (which you really should be)
 <!-- {x-release-please-start-version} -->
 ```yaml
   - name: Setup Elixir
-    uses: stordco/actions-elixir/setup@v0.1.2
+    uses: stordco/actions-elixir/setup@v1.0.0
     with:
       elixir-version: "1.14"
       otp-version: "25.0"
@@ -46,7 +46,7 @@ Lastly, if things go wrong and your cache is breaking builds, you can manually i
 <!-- {x-release-please-start-version} -->
 ```yaml
   - name: Setup Elixir
-    uses: stordco/actions-elixir/setup@v0.1.2
+    uses: stordco/actions-elixir/setup@v1.0.0
     with:
       cache-version: v2
 ```
