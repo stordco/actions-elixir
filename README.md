@@ -16,7 +16,7 @@ operations - setup, dependency retrieval, etc.
   - uses: stordco/actions-elixir/setup@v0.1
     with:
       elixir_version: "1.13"
-      github_personal_access_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+      github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
       otp_version: "25.0"
 ```
 <!-- {x-release-please-end} -->
@@ -25,5 +25,5 @@ operations - setup, dependency retrieval, etc.
 
 - `cache_path` - (Optional) Override default paths to cache
 - `elixir_version` - Specify Elixir version
-- `github_personal_access_token` - (Optional) Usually `secrets.GITHUB_PERSONAL_ACCESS_TOKEN`, to setup git for mix dep retrieval
+- `github_token` - (Optional) Usually `secrets.GH_PERSONAL_ACCESS_TOKEN`, to setup git for mix dep retrieval
 - `otp_version` - Specify OTP version

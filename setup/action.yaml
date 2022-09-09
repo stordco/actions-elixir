@@ -1,8 +1,8 @@
-name: actions-elixir/setup
+name: Setup Elixir environment
 
 branding:
-  color: blue
-  icon: list
+  color: purple
+  icon: code
 
 description: >-
   GitHub Composite Action for installing Elixir & Beam, setting up and
@@ -13,64 +13,118 @@ inputs:
     default: |
       _build
       deps
-    description: Override default paths to cache
+    description: >-
+      A list of files, directories, and wildcard patterns to cache and restore.
+      By default this will cache the build and deps folder allowing for faster
+      rebuilding.
     required: false
     type: string
   cache_name:
-    default: credo
-    description: Override the default cache name used in the key
+    default: cache
+    description: >-
+      The name of the cache. This is used to build the full cache key. By
+      default this will simply be "cache" but we strongly recommend
+      changing it based on what tool you are using. This is because different
+      tools will have different compile settings, like credo and dialyzer,
+      and therefor have different files cached.
+    required: false
+    type: string
+  cache_version:
+    default: v1
+    description: >-
+      (Optional) A version string to include in the cache key. You can change
+      this value to bust the cache if there is an error.
     required: false
     type: string
   elixir_version:
-    description: 'Elixir version (ex: 1.13.4)'
-    required: true
-    type: string
-  github_personal_access_token:
-    default: null
-    required: false
+    default: ""
     description: >-
-      (Optional) Used to set git up for mix dep retrieval from private repos,
-      usually `secrets.GITHUB_PERSONAL_ACCESS_TOKEN`
+      (Optional) Version range or exact version of Elixir to use. If this is
+      not set, we attempt to read the "elixir" field from the .tool-versions
+      file.
+    required: false
+    type: string
+  github_token:
+    default: ""
+    description: >-
+      (Optional) Used to setup mix for pulling private packages from GitHub.
+      This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`.
+    required: false
+    type: string
+  hex_organization:
+    default: stord
+    description: >-
+      (Optional) Hex organization when authenticating. By default this will
+      be the Stord hex organization.
+    required: false
+    type: string
+  hex_token:
+    default: ""
+    description: >-
+      (Optional) Used to setup mix for pulling private packages from the
+      hex organization. This is usually `secrets.HEX_API_KEY`.
+    required: false
     type: string
   otp_version:
-    description: 'OTP version (ex: 25.0)'
-    required: true
+    default: ""
+    description: >-
+      (Optional) Version range or exact version of Erlang/OTP to use. If this
+      is not set, we attempt to read the "erlang" field from the .tool-versions
+      file.
+    required: false
     type: string
 
+outputs:
+  cache_hit:
+    description: >-
+      A boolean value to indicate an exact match was found for the cache.
+    value: ${{ steps.cache.outputs.cache-hit }}
+  elixir_version:
+    description: >-
+      The exact version of Elixir installed.
+    value: ${{ steps.beam.outputs.elixir-version }}
+  otp_version:
+    description: >-
+      The exact version of Erlang/OTP installed.
+    value: ${{ steps.beam.outputs.otp-version }}
+
 runs:
+  using: composite
   steps:
-      - name: Install (Elixir)
-        id: beam
+      - id: versions
+        if: ${{ !inputs.elixir_version || !inputs.otp_version }}
+        name: Read .tool-versions
+        uses: marocchino/tool-versions-action@f54c9de89a72df2e14c307f35ea698e0745b6ad3
+
+      - id: beam
+        name: Install Elixir
         uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{ inputs.otp_version }}
-          elixir-version: ${{ inputs.elixir_version }}
+          otp-version: ${{ inputs.otp_version || steps.versions.outputs.otp }}
+          elixir-version: ${{ inputs.elixir_version || steps.versions.outputs.elixir }}
 
-      - name: Cache
-        id: cache
-        uses: actions/cache@v2
+      - id: cache
+        name: Cache
+        uses: actions/cache@v3
         with:
-          key: elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-${{ github.ref }}
+          key: elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-${{ github.ref }}
           restore-keys: |
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-refs/heads/${{ github.event.repository.default_branch }}
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-
-            elixir-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-
+            elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-
+            elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-
+            elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-
           path: ${{ inputs.cache_path }}
 
-      - name: Setup (Mix)
-        if: inputs.github_personal_access_token != null
-        run: |
-          # git config - add GitHub token
-          git \
-            config \
-            --global \
-            url."https://${{ inputs.github_personal_access_token }}:@github.com".insteadOf \
-            "https://github.com"
+      - if: ${{ inputs.github_token }}
+        name: Setup GitHub Auth
+        run: git config --global url."https://x-access-token:${{ inputs.github_token }}@github.com".insteadOf "https://github.com"
         shell: bash
 
-      - name: Install (Mix)
-        if: steps.cache.outputs.cache-hit != 'true'
+      - if: ${{ inputs.hex_token }}
+        name: Setup Hex Auth
+        run: mix hex.organization auth "${{ inputs.hex_organization }}" --key "${{ inputs.hex_token }}"
+        shell: bash
+
+      - if: steps.cache.outputs.cache-hit != 'true'
+        name: Install Dependencies
         run: mix deps.get
         shell: bash
-  using: composite
