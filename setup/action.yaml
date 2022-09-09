@@ -9,7 +9,7 @@ description: >-
   retrieving dependencies along with caching.
 
 inputs:
-  cache_path:
+  cache-path:
     default: |
       _build
       deps
@@ -19,7 +19,7 @@ inputs:
       rebuilding.
     required: false
     type: string
-  cache_name:
+  cache-name:
     default: ${{ github.job }}
     description: >-
       (Optional) The name of the cache. This is used to build the full cache
@@ -31,40 +31,40 @@ inputs:
       cached.
     required: false
     type: string
-  cache_version:
+  cache-version:
     default: v1
     description: >-
       (Optional) A version string to include in the cache key. You can change
       this value to bust the cache if there is an error.
     required: false
     type: string
-  elixir_version:
+  elixir-version:
     description: >-
       (Optional) Version range or exact version of Elixir to use. If this is
       not set, we attempt to read the "elixir" field from the .tool-versions
       file.
     required: false
     type: string
-  github_token:
+  github-token:
     description: >-
       (Optional) Used to setup mix for pulling private packages from GitHub.
       This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`.
     required: false
     type: string
-  hex_organization:
+  hex-organization:
     default: stord
     description: >-
       (Optional) Hex organization when authenticating. By default this will
       be the Stord hex organization.
     required: false
     type: string
-  hex_token:
+  hex-token:
     description: >-
       (Optional) Used to setup mix for pulling private packages from the
       hex organization. This is usually `secrets.HEX_API_KEY`.
     required: false
     type: string
-  otp_version:
+  otp-version:
     description: >-
       (Optional) Version range or exact version of Erlang/OTP to use. If this
       is not set, we attempt to read the "erlang" field from the .tool-versions
@@ -73,15 +73,15 @@ inputs:
     type: string
 
 outputs:
-  cache_hit:
+  cache-hit:
     description: >-
       A boolean value to indicate an exact match was found for the cache.
     value: ${{ steps.cache.outputs.cache-hit }}
-  elixir_version:
+  elixir-version:
     description: >-
       The exact version of Elixir installed.
     value: ${{ steps.beam.outputs.elixir-version }}
-  otp_version:
+  otp-version:
     description: >-
       The exact version of Erlang/OTP installed.
     value: ${{ steps.beam.outputs.otp-version }}
@@ -90,7 +90,7 @@ runs:
   using: composite
   steps:
     - id: versions
-      if: ${{ !inputs.elixir_version || !inputs.otp_version }}
+      if: ${{ !inputs.elixir-version || !inputs.otp-version }}
       name: Read .tool-versions
       uses: marocchino/tool-versions-action@f54c9de89a72df2e14c307f35ea698e0745b6ad3
 
@@ -98,28 +98,28 @@ runs:
       name: Install Elixir
       uses: erlef/setup-beam@v1
       with:
-        otp-version: ${{ inputs.otp_version || steps.versions.outputs.erlang }}
-        elixir-version: ${{ inputs.elixir_version || steps.versions.outputs.elixir }}
+        otp-version: ${{ inputs.otp-version || steps.versions.outputs.erlang }}
+        elixir-version: ${{ inputs.elixir-version || steps.versions.outputs.elixir }}
 
     - id: cache
       name: Cache
       uses: actions/cache@v3
       with:
-        key: elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-${{ github.ref }}
+        key: elixir-setup-${{ inputs.cache-version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache-name }}-${{ hashFiles('mix.lock') }}-${{ github.ref }}
         restore-keys: |
-          elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-${{ hashFiles('mix.lock') }}-
-          elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache_name }}-
-          elixir-setup-${{ inputs.cache_version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-
-        path: ${{ inputs.cache_path }}
+          elixir-setup-${{ inputs.cache-version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache-name }}-${{ hashFiles('mix.lock') }}-
+          elixir-setup-${{ inputs.cache-version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache-name }}-
+          elixir-setup-${{ inputs.cache-version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-
+        path: ${{ inputs.cache-path }}
 
-    - if: ${{ inputs.github_token }}
+    - if: ${{ inputs.github-token }}
       name: Setup GitHub Auth
-      run: git config --global url."https://x-access-token:${{ inputs.github_token }}@github.com".insteadOf "https://github.com"
+      run: git config --global url."https://x-access-token:${{ inputs.github-token }}@github.com".insteadOf "https://github.com"
       shell: bash
 
-    - if: ${{ inputs.hex_token }}
+    - if: ${{ inputs.hex-token }}
       name: Setup Hex Auth
-      run: mix hex.organization auth "${{ inputs.hex_organization }}" --key "${{ inputs.hex_token }}"
+      run: mix hex.organization auth "${{ inputs.hex-organization }}" --key "${{ inputs.hex-token }}"
       shell: bash
 
     - if: steps.cache.outputs.cache-hit != 'true'

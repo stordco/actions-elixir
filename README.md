@@ -24,8 +24,8 @@ But some times it's not that simple. If you are using a private package from Git
   - name: Setup Elixir
     uses: stordco/actions-elixir/setup@v0.1.2
     with:
-      github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-      hex_token: ${{ secrets.HEX_API_KEY }}
+      github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      hex-token: ${{ secrets.HEX_API_KEY }}
 ```
 <!-- {x-release-please-end} -->
 
@@ -36,8 +36,8 @@ If you are not using [`asdf`](https://asdf-vm.com/) (which you really should be)
   - name: Setup Elixir
     uses: stordco/actions-elixir/setup@v0.1.2
     with:
-      elixir_version: "1.14"
-      otp_version: "25.0"
+      elixir-version: "1.14"
+      otp-version: "25.0"
 ```
 <!-- {x-release-please-end} -->
 
@@ -48,7 +48,7 @@ Lastly, if things go wrong and your cache is breaking builds, you can manually i
   - name: Setup Elixir
     uses: stordco/actions-elixir/setup@v0.1.2
     with:
-      cache_version: v2
+      cache-version: v2
 ```
 <!-- {x-release-please-end} -->
 
@@ -56,19 +56,19 @@ Lastly, if things go wrong and your cache is breaking builds, you can manually i
 
 | name | description | default value |
 | --- | --- | --- |
-| `cache_path` | A list of files, directories, and wildcard patterns to cache and restore. By default this will cache the build and deps folder allowing for faster rebuilding. | `_build deps` |
-| `cache_name` | (Optional) The name of the cache. This is used to build the full cache key. By default this uses the job name which should suffice is most scenarios. If you have a custom naming scheme or want to share caches between different actions you can set it here. The reason we set this differently for each job is because tools will have different compile settings, like credo and dialyzer, and therefor have different files cached. | |
-| `cache_version` | (Optional) A version string to include in the cache key. You can change this value to bust the cache if there is an error. | `v1` |
-| `elixir_version` | (Optional) Version range or exact version of Elixir to use. If this is not set, we attempt to read the "elixir" field from the .tool-versions file. | |
-| `github_token` | (Optional) Used to setup mix for pulling private packages from GitHub. This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`. | |
-| `hex_organization` | (Optional) Hex organization when authenticating. By default this will be the Stord hex organization. | |
-| `hex_token` | (Optional) Used to setup mix for pulling private packages from the hex organization. This is usually `secrets.HEX_API_KEY`. | |
-| `otp_version` | (Optional) Version range or exact version of Erlang/OTP to use. If this is not set, we attempt to read the "erlang" field from the .tool-versions file. | |
+| `cache-path` | A list of files, directories, and wildcard patterns to cache and restore. By default this will cache the build and deps folder allowing for faster rebuilding. | `_build deps` |
+| `cache-name` | (Optional) The name of the cache. This is used to build the full cache key. By default this uses the job name which should suffice is most scenarios. If you have a custom naming scheme or want to share caches between different actions you can set it here. The reason we set this differently for each job is because tools will have different compile settings, like credo and dialyzer, and therefor have different files cached. | |
+| `cache-version` | (Optional) A version string to include in the cache key. You can change this value to bust the cache if there is an error. | `v1` |
+| `elixir-version` | (Optional) Version range or exact version of Elixir to use. If this is not set, we attempt to read the "elixir" field from the .tool-versions file. | |
+| `github-token` | (Optional) Used to setup mix for pulling private packages from GitHub. This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`. | |
+| `hex-organization` | (Optional) Hex organization when authenticating. By default this will be the Stord hex organization. | |
+| `hex-token` | (Optional) Used to setup mix for pulling private packages from the hex organization. This is usually `secrets.HEX_API_KEY`. | |
+| `otp-version` | (Optional) Version range or exact version of Erlang/OTP to use. If this is not set, we attempt to read the "erlang" field from the .tool-versions file. | |
 
 ### Outputs
 
 | name | description |
 | --- | --- |
-| `cache_hit` | A boolean value to indicate an exact match was found for the cache. |
-| `elixir_version` | The exact version of Elixir installed. |
-| `otp_version` | The exact version of Erlang/OTP installed. |
+| `cache-hit` | A boolean value to indicate an exact match was found for the cache. |
+| `elixir-version` | The exact version of Elixir installed. |
+| `otp-version` | The exact version of Erlang/OTP installed. |
