@@ -20,13 +20,15 @@ inputs:
     required: false
     type: string
   cache_name:
-    default: cache
+    default: ${{ github.job }}
     description: >-
-      The name of the cache. This is used to build the full cache key. By
-      default this will simply be "cache" but we strongly recommend
-      changing it based on what tool you are using. This is because different
-      tools will have different compile settings, like credo and dialyzer,
-      and therefor have different files cached.
+      (Optional) The name of the cache. This is used to build the full cache
+      key. By default this uses the job name which should suffice is most
+      scenarios. If you have a custom naming scheme or want to share caches
+      between different actions you can set it here. The reason we set this
+      differently for each job is because tools will have different compile
+      settings, like credo and dialyzer, and therefor have different files
+      cached.
     required: false
     type: string
   cache_version:

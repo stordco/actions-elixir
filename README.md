@@ -57,7 +57,7 @@ Lastly, if things go wrong and your cache is breaking builds, you can manually i
 | name | description | default value |
 | --- | --- | --- |
 | `cache_path` | A list of files, directories, and wildcard patterns to cache and restore. By default this will cache the build and deps folder allowing for faster rebuilding. | `_build deps` |
-| `cache_name` | The name of the cache. This is used to build the full cache key. By default this will simply be "cache" but we strongly recommend changing it based on what tool you are using. This is because different tools will have different compile settings, like credo and dialyzer, and therefor have different files cached. | `cache` |
+| `cache_name` | (Optional) The name of the cache. This is used to build the full cache key. By default this uses the job name which should suffice is most scenarios. If you have a custom naming scheme or want to share caches between different actions you can set it here. The reason we set this differently for each job is because tools will have different compile settings, like credo and dialyzer, and therefor have different files cached. | |
 | `cache_version` | (Optional) A version string to include in the cache key. You can change this value to bust the cache if there is an error. | `v1` |
 | `elixir_version` | (Optional) Version range or exact version of Elixir to use. If this is not set, we attempt to read the "elixir" field from the .tool-versions file. | |
 | `github_token` | (Optional) Used to setup mix for pulling private packages from GitHub. This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`. | |
