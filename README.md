@@ -61,7 +61,7 @@ Lastly, if things go wrong and your cache is breaking builds, you can manually i
 | `cache-version` | (Optional) A version string to include in the cache key. You can change this value to bust the cache if there is an error. | `v1` |
 | `elixir-version` | (Optional) Version range or exact version of Elixir to use. If this is not set, we attempt to read the "elixir" field from the .tool-versions file. | |
 | `github-token` | (Optional) Used to setup mix for pulling private packages from GitHub. This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`. | |
-| `hex-organization` | (Optional) Hex organization when authenticating. By default this will be the Stord hex organization. | |
+| `hex-organization` | (Optional) Hex organization when authenticating. By default this will be the Stord hex organization. | `stord` |
 | `hex-token` | (Optional) Used to setup mix for pulling private packages from the hex organization. This is usually `secrets.HEX_API_KEY`. | |
 | `otp-version` | (Optional) Version range or exact version of Erlang/OTP to use. If this is not set, we attempt to read the "erlang" field from the .tool-versions file. | |
 
