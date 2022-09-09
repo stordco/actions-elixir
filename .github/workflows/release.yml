@@ -1,0 +1,45 @@
+---
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  please:
+    name: Please
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Release
+        uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: node
+          package-name: actions-elixir
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          extra-files: README.md
+
+      - if: ${{ steps.release.outputs.release_created }}
+        name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: my-branch
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          persist-credentials: true
+
+      - if: ${{ steps.release.outputs.release_created }}
+        name: Tag
+        run: |
+          git config user.name stord-engineering-account
+          git config user.email engineering@stord.com
+
+          git tag -d v${{ steps.release.outputs.major }} || true
+          git tag -d v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+          git push origin :v${{ steps.release.outputs.major }} || true
+          git push origin :v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+
+          git tag -a v${{ steps.release.outputs.major }} -m "chore(main): release ${{ steps.release.outputs.major }}"
+          git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "chore(main): release  v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
+          git push origin v${{ steps.release.outputs.major }}
+          git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}
