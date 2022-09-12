@@ -144,34 +144,39 @@ runs:
 
           buildArgs.push(`GIT_SHA=${context.sha}`)
 
-          if (process.env.INPUT_GITHUB_TOKEN) {
+          if (process.env.INPUT_GITHUB_TOKEN != null) {
             buildArgs.push(`GH_PERSONAL_ACCESS_TOKEN=${process.env.INPUT_GITHUB_TOKEN}`)
             buildArgs.push(`GITHUB_PERSONAL_ACCESS_TOKEN=${process.env.INPUT_GITHUB_TOKEN}`)
             secrets.push(`github_token=${process.env.INPUT_GITHUB_TOKEN}`)
+            core.info('Added GitHub token build information')
           }
 
-          if (process.env.INPUT_HEX_TOKEN) {
+          if (process.env.INPUT_HEX_TOKEN != null) {
             buildArgs.push(`HEX_TOKEN=${process.env.INPUT_HEX_TOKEN}`)
             secrets.push(`hex_token=${process.env.INPUT_HEX_TOKEN}`)
+            core.info('Added Hex token build information')
           }
 
           core.setOutput('build-args', buildArgs.join('\n'))
           core.setOutput('secrets', secrets.join('\n'))
 
-          if (process.env.INPUT_CACHE) {
+          if (process.env.INPUT_CACHE != null) {
             core.setOutput('cache-from', 'type=gha')
             core.setOutput('cache-to', 'type=gha,mode=max')
+            core.info('Using GitHub cache for maximum performance')
           } else {
             core.setOutput('cache-from', '')
             core.setOutput('cache-to', '')
+            core.info('Cache is disabled')
           }
 
-          if (process.env.INPUT_IMAGES) {
+          if (process.env.INPUT_IMAGES != null) {
             core.setOutput('images', process.env.INPUT_IMAGES)
           } else {
-            core.setOutput('images', `ghcr.io/${context.repo.owner}/${context.repo.repo}`)
+            const image = `ghcr.io/${context.repo.owner}/${context.repo.repo}`
+            core.setOutput('images', image)
+            core.info(`Setting docker image to default ${image}`)
           }
-
 
     - id: metadata
       name: Get Metadata
