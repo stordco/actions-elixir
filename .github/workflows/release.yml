@@ -19,7 +19,7 @@ jobs:
           release-type: node
           package-name: actions-elixir
           token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          extra-files: README.md
+          extra-files: setup/README.md
 
       - if: ${{ steps.release.outputs.release_created }}
         name: Checkout

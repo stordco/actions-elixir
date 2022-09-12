@@ -1,0 +1,43 @@
+---
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  documentation:
+    name: Generate Documentation (${{ matrix.action }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        action:
+          - setup
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          persist-credentials: true
+
+      - name: Update Documentation
+        uses: npalm/action-docs-action@v1.2.0
+        with:
+          readme: "${{ matrix.action }}/README.md"
+          actionFile: "${{ matrix.action }}/action.yaml"
+
+      - name: Commit
+        run: |
+          git config user.name stord-engineering-account
+          git config user.email engineering@stord.com
+
+          git add "${{ matrix.action }}/README.md"
+          git commit -m "chore: update documentation"
+          git push
