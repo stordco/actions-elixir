@@ -100,7 +100,7 @@ outputs:
     description: >-
       The first docker image published. This can be used as reference when
       deploying the image.
-    value: ${{ steps.output.outputs.image }}
+    value: ${{ steps.outputs.outputs.image }}
   images:
     description: >-
       A list of all the published docker images.
@@ -118,7 +118,7 @@ outputs:
       A sha specific tag used when publishing the docker image. This is the most
       specific tag that won't get repeated and should be used when deploying the
       image.
-    value: ${{ steps.output.outputs.tag }}
+    value: ${{ steps.outputs.outputs.tag }}
   tags:
     description: >-
       A list of all docker tags that were published.
@@ -189,7 +189,7 @@ runs:
           latest=auto
         github-token: ${{ inputs.github-token }}
         images: |
-          ${{ steps.inputs.output.images }}
+          ${{ steps.inputs.outputs.images }}
         labels: |
           ${{ inputs.labels }}
         tags: |
@@ -208,9 +208,9 @@ runs:
       name: Build
       uses: docker/build-push-action@v3
       with:
-        build-args: ${{ steps.inputs.output.build-args }}
-        cache-from: ${{ steps.inputs.output.cache-from }}
-        cache-to: ${{ steps.inputs.output.cache-to }}
+        build-args: ${{ steps.inputs.outputs.build-args }}
+        cache-from: ${{ steps.inputs.outputs.cache-from }}
+        cache-to: ${{ steps.inputs.outputs.cache-to }}
         context: ${{ inputs.context }}
         labels: ${{ steps.metadata.outputs.labels }}
         push: ${{ inputs.push }}
