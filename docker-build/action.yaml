@@ -170,6 +170,8 @@ runs:
             core.info('Cache is disabled')
           }
 
+          console.log(typeof process.env.INPUT_IMAGES)
+          console.log(`"${process.env.INPUT_IMAGES}"`)
           if (process.env.INPUT_IMAGES != null) {
             core.setOutput('images', process.env.INPUT_IMAGES)
           } else {
