@@ -139,28 +139,30 @@ runs:
         INPUT_SECRETS: ${{ inputs.secrets }}
       with:
         script: |
-          const buildArgs = (process.env.INPUT_BUILD_ARGS || "").split('\n')
-          const secrets = (process.env.INPUT_SECRETS || "").split('\n')
+          const buildArgs = core.getMultilineInput('build-args')
+          const secrets = core.getMultilineInput('secrets')
 
           buildArgs.push(`GIT_SHA=${context.sha}`)
 
-          if (process.env.INPUT_GITHUB_TOKEN != null) {
-            buildArgs.push(`GH_PERSONAL_ACCESS_TOKEN=${process.env.INPUT_GITHUB_TOKEN}`)
-            buildArgs.push(`GITHUB_PERSONAL_ACCESS_TOKEN=${process.env.INPUT_GITHUB_TOKEN}`)
-            secrets.push(`github_token=${process.env.INPUT_GITHUB_TOKEN}`)
+          const githubToken = core.getInput('github-token')
+          if (githubToken != null) {
+            buildArgs.push(`GH_PERSONAL_ACCESS_TOKEN=${githubToken}`)
+            buildArgs.push(`GITHUB_PERSONAL_ACCESS_TOKEN=${githubToken}`)
+            secrets.push(`github_token=${githubToken}`)
             core.info('Added GitHub token build information')
           }
 
-          if (process.env.INPUT_HEX_TOKEN != null) {
-            buildArgs.push(`HEX_TOKEN=${process.env.INPUT_HEX_TOKEN}`)
-            secrets.push(`hex_token=${process.env.INPUT_HEX_TOKEN}`)
+          const hexToken = core.getInput('hex-token')
+          if (hexToken != null) {
+            buildArgs.push(`HEX_TOKEN=${hexToken}`)
+            secrets.push(`hex_token=${hexToken}`)
             core.info('Added Hex token build information')
           }
 
           core.setOutput('build-args', buildArgs.join('\n'))
           core.setOutput('secrets', secrets.join('\n'))
 
-          if (process.env.INPUT_CACHE != null) {
+          if (core.getBooleanInput('cache')) {
             core.setOutput('cache-from', 'type=gha')
             core.setOutput('cache-to', 'type=gha,mode=max')
             core.info('Using GitHub cache for maximum performance')
@@ -170,9 +172,8 @@ runs:
             core.info('Cache is disabled')
           }
 
-          console.log(typeof process.env.INPUT_IMAGES)
-          console.log(`"${process.env.INPUT_IMAGES}"`)
-          if (process.env.INPUT_IMAGES != null) {
+          const images = core.getMultilineInput('images')
+          if (images.length > 0) {
             core.setOutput('images', process.env.INPUT_IMAGES)
           } else {
             const image = `ghcr.io/${context.repo.owner}/${context.repo.repo}`
