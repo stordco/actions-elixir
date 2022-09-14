@@ -139,12 +139,12 @@ runs:
         INPUT_SECRETS: ${{ inputs.secrets }}
       with:
         script: |
-          const buildArgs = core.getMultilineInput('build-args')
+          const buildArgs = core.getMultilineInput('build args')
           const secrets = core.getMultilineInput('secrets')
 
           buildArgs.push(`GIT_SHA=${context.sha}`)
 
-          const githubToken = core.getInput('github-token')
+          const githubToken = core.getInput('github token')
           if (githubToken != null && githubToken !== '') {
             buildArgs.push(`GH_PERSONAL_ACCESS_TOKEN=${githubToken}`)
             buildArgs.push(`GITHUB_PERSONAL_ACCESS_TOKEN=${githubToken}`)
@@ -152,7 +152,7 @@ runs:
             core.info('Added GitHub token build information')
           }
 
-          const hexToken = core.getInput('hex-token')
+          const hexToken = core.getInput('hex token')
           if (hexToken != null && hexToken !== '') {
             buildArgs.push(`HEX_TOKEN=${hexToken}`)
             secrets.push(`hex_token=${hexToken}`)
