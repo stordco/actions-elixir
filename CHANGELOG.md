@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/stordco/actions-elixir/compare/v1.0.2...v1.1.0) (2022-09-14)
+
+
+### Features
+
+* create a docker-build action ([#13](https://github.com/stordco/actions-elixir/issues/13)) ([d9dcad7](https://github.com/stordco/actions-elixir/commit/d9dcad7717fc32542aeaf29a5cc89d6144656514))
+
+
+### Bug Fixes
+
+* update release to update new README files ([#15](https://github.com/stordco/actions-elixir/issues/15)) ([d9df027](https://github.com/stordco/actions-elixir/commit/d9df027b6716010866c354566be0b7ea7452f773))
+
 ## [1.0.2](https://github.com/stordco/actions-elixir/compare/v1.0.1...v1.0.2) (2022-09-09)
 
 
