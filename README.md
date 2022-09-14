@@ -4,6 +4,7 @@ GitHub Actions for simplifying Stord Elixir operations.
 
 Currently we have these actions available:
 
+- [`docker-build`](./docker-build)
 - [`setup`](./setup)
 
 ## Releasing
