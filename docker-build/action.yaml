@@ -33,6 +33,7 @@ inputs:
     required: false
     type: string
   file:
+    default: Dockerfile
     description: >-
       (Optional) The path to the Dockerfile we are building.
     required: false
@@ -212,6 +213,7 @@ runs:
         cache-from: ${{ steps.inputs.outputs.cache-from }}
         cache-to: ${{ steps.inputs.outputs.cache-to }}
         context: ${{ inputs.context }}
+        file: ${{ inputs.file }}
         labels: ${{ steps.metadata.outputs.labels }}
         push: ${{ inputs.push }}
         secrets: ${{ steps.inputs.outputs.secrets }}
