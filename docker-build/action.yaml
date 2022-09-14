@@ -145,7 +145,7 @@ runs:
           buildArgs.push(`GIT_SHA=${context.sha}`)
 
           const githubToken = core.getInput('github-token')
-          if (githubToken != null) {
+          if (githubToken != null && githubToken !== '') {
             buildArgs.push(`GH_PERSONAL_ACCESS_TOKEN=${githubToken}`)
             buildArgs.push(`GITHUB_PERSONAL_ACCESS_TOKEN=${githubToken}`)
             secrets.push(`github_token=${githubToken}`)
@@ -153,7 +153,7 @@ runs:
           }
 
           const hexToken = core.getInput('hex-token')
-          if (hexToken != null) {
+          if (hexToken != null && hexToken !== '') {
             buildArgs.push(`HEX_TOKEN=${hexToken}`)
             secrets.push(`hex_token=${hexToken}`)
             core.info('Added Hex token build information')
@@ -214,6 +214,7 @@ runs:
         context: ${{ inputs.context }}
         labels: ${{ steps.metadata.outputs.labels }}
         push: ${{ inputs.push }}
+        secrets: ${{ steps.inputs.outputs.secrets }}
         tags: ${{ steps.metadata.outputs.tags }}
 
     - id: outputs
