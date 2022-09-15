@@ -66,6 +66,8 @@ Lastly, you'll probably want to install some dependencies from our GitHub organi
 | `hex-token` | (Optional) Used to setup mix for pulling private packages from the hex organization. This is usually `secrets.HEX_API_KEY`. | |
 | `images` | (Optional) A list of docker images to use when building and publishing. By default, this will match the repository being built. For example, if you are building `stordco/test-app`, the image will be `ghcr.io/stordco/test-app`. | |
 | `labels` | (Optional) A list of labels to be added to the default ones when pushing the image. | |
+| `oban-fingerprint` | (Optional) Public key for fetching the oban pro repository data. This is usually refered to as OBAN_KEY_FINTERPRINT in documentation. | |
+| `oban-token` | (Optional) Oban pro license key. | |
 | `push` | (Optional) Push the final built image to the set registry. | `false` |
 | `secrets` | (Optional) A list of extra secrets to pass to the build step. Note that the github-token and hex-token will automatically be set if passed in. | |
 | `tags` | (Optional) A list of tags to be added to the default ones when pushing the image. | |
