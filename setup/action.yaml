@@ -135,9 +135,9 @@ runs:
 
     - if: ${{ inputs.oban-fingerprint && inputs.oban-token }}
       name: Setup Oban Repository
-      run: >
-        mix hex.repo add oban "https://getoban.pro/repo"
-          --fetch-public-key "${{ inputs.oban-fingerprint }}"
+      run: |
+        mix hex.repo add oban "https://getoban.pro/repo" \
+          --fetch-public-key "${{ inputs.oban-fingerprint }}" \
           --auth-key "${{ inputs.oban-token }}"
       shell: bash
 
