@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/stordco/actions-elixir/compare/v1.2.0...v1.2.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* update setup action with oban new line issues ([#18](https://github.com/stordco/actions-elixir/issues/18)) ([3d9abed](https://github.com/stordco/actions-elixir/commit/3d9abed6cfc9f720b7e480752223e6c57b795c28))
+
 ## [1.2.0](https://github.com/stordco/actions-elixir/compare/v1.1.0...v1.2.0) (2022-09-15)
 
 
