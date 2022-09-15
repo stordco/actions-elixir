@@ -72,6 +72,17 @@ inputs:
       pushing the image.
     required: false
     type: string
+  oban-fingerprint:
+    description: >-
+      (Optional) Public key for fetching the oban pro repository data.
+      This is usually refered to as OBAN_KEY_FINTERPRINT in documentation.
+    required: false
+    type: string
+  oban-token:
+    description: >-
+      (Optional) Oban pro license key.
+    required: false
+    type: string
   push:
     default: false
     description: >-
@@ -137,6 +148,8 @@ runs:
         INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
         INPUT_HEX_TOKEN: ${{ inputs.hex-token }}
         INPUT_IMAGES: ${{ inputs.images }}
+        INPUT_OBAN_FINGERPRINT: ${{ inputs.oban-fingerprint }}
+        INPUT_OBAN_TOKEN: ${{ inputs.oban-token }}
         INPUT_SECRETS: ${{ inputs.secrets }}
       with:
         script: |
@@ -158,6 +171,16 @@ runs:
             buildArgs.push(`HEX_TOKEN=${hexToken}`)
             secrets.push(`hex_token=${hexToken}`)
             core.info('Added Hex token build information')
+          }
+
+          const obanFingerprint = core.getInput('oban fingerprint')
+          const obanToken = core.getInput('oban token')
+          if (obanFingerprint != null && obanFingerprint !== '') {
+            if (obanToken != null && obanToken !== '') {
+              secrets.push(`oban_fingerprint=${obanFingerprint}`)
+              secrets.push(`oban_token=${obanToken}`)
+              core.info('Added Oban Pro build information')
+            }
           }
 
           core.setOutput('build-args', buildArgs.join('\n'))

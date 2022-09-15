@@ -64,6 +64,17 @@ inputs:
       hex organization. This is usually `secrets.HEX_API_KEY`.
     required: false
     type: string
+  oban-fingerprint:
+    description: >-
+      (Optional) Public key for fetching the oban pro repository data.
+      This is usually refered to as OBAN_KEY_FINTERPRINT in documentation.
+    required: false
+    type: string
+  oban-token:
+    description: >-
+      (Optional) Oban pro license key.
+    required: false
+    type: string
   otp-version:
     description: >-
       (Optional) Version range or exact version of Erlang/OTP to use. If this
@@ -120,6 +131,14 @@ runs:
     - if: ${{ inputs.hex-token }}
       name: Setup Hex Auth
       run: mix hex.organization auth "${{ inputs.hex-organization }}" --key "${{ inputs.hex-token }}"
+      shell: bash
+
+    - if: ${{ inputs.oban-fingerprint && inputs.oban-token }}
+      name: Setup Oban Repository
+      run: >
+        mix hex.repo add oban "https://getoban.pro/repo"
+          --fetch-public-key "${{ inputs.oban-fingerprint }}"
+          --auth-key "${{ inputs.oban-token }}"
       shell: bash
 
     - if: steps.cache.outputs.cache-hit != 'true'
