@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/stordco/actions-elixir/compare/v1.1.0...v1.2.0) (2022-09-15)
+
+
+### Features
+
+* allow adding oban pro repository ([#16](https://github.com/stordco/actions-elixir/issues/16)) ([36fc307](https://github.com/stordco/actions-elixir/commit/36fc307f3b2af9981b853597c99575a982183563))
+
 ## [1.1.0](https://github.com/stordco/actions-elixir/compare/v1.0.2...v1.1.0) (2022-09-14)
 
 
