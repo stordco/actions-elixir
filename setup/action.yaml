@@ -103,7 +103,7 @@ runs:
     - id: versions
       if: ${{ !inputs.elixir-version || !inputs.otp-version }}
       name: Read .tool-versions
-      uses: marocchino/tool-versions-action@f54c9de89a72df2e14c307f35ea698e0745b6ad3
+      uses: marocchino/tool-versions-action@608d0ecb8f01e467223f0a854ead7d3fc784b540
 
     - id: beam
       name: Install Elixir
