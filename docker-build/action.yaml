@@ -141,7 +141,7 @@ runs:
   steps:
     - id: inputs
       name: Get Inputs
-      uses: actions/github-script@v5
+      uses: actions/github-script@v6
       env:
         INPUT_BUILD_ARGS: ${{ inputs.build-args }}
         INPUT_CACHE: ${{ inputs.cache }}
@@ -244,7 +244,7 @@ runs:
 
     - id: outputs
       name: Get Outputs
-      uses: actions/github-script@v5
+      uses: actions/github-script@v6
       env:
         BUILD_OUTPUT: ${{ steps.metadata.outputs.json }}
       with:
