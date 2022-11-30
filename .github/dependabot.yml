@@ -1,0 +1,20 @@
+version: 2
+
+updates:
+  - directory: /.github/workflows
+    open-pull-requests-limit: 2
+    package-ecosystem: github-actions
+    schedule:
+      interval: weekly
+
+  - directory: /docker-build
+    open-pull-requests-limit: 2
+    package-ecosystem: github-actions
+    schedule:
+      interval: weekly
+
+  - directory: /setup
+    open-pull-requests-limit: 2
+    package-ecosystem: github-actions
+    schedule:
+      interval: weekly
