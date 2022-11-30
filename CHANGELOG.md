@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/stordco/actions-elixir/compare/v1.2.2...v1.2.3) (2022-11-30)
+
+
+### Bug Fixes
+
+* update dependencies and remove deprecation message ([6a5d111](https://github.com/stordco/actions-elixir/commit/6a5d111875a4625d7fa92d8da1e9ec8dbc87cb08))
+
 ## [1.2.1](https://github.com/stordco/actions-elixir/compare/v1.2.0...v1.2.1) (2022-09-15)
 
 
