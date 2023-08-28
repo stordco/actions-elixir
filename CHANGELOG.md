@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/stordco/actions-elixir/compare/v1.2.3...v1.3.0) (2023-08-28)
+
+
+### Features
+
+* support passing platforms to docker build ([#26](https://github.com/stordco/actions-elixir/issues/26)) ([1b773fc](https://github.com/stordco/actions-elixir/commit/1b773fca39749682041cd1afbcb8e47dfe341f28))
+
 ## [1.2.3](https://github.com/stordco/actions-elixir/compare/v1.2.2...v1.2.3) (2022-11-30)
 
 
