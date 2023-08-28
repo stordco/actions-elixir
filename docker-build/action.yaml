@@ -83,6 +83,12 @@ inputs:
       (Optional) Oban pro license key.
     required: false
     type: string
+  platforms:
+    default: linux/amd64
+    description: >-
+      (Optional) List of target platforms for build.
+    required: false
+    type: string
   push:
     default: false
     description: >-
@@ -238,6 +244,7 @@ runs:
         context: ${{ inputs.context }}
         file: ${{ inputs.file }}
         labels: ${{ steps.metadata.outputs.labels }}
+        platforms: ${{ inputs.platforms }}
         push: ${{ inputs.push }}
         secrets: ${{ steps.inputs.outputs.secrets }}
         tags: ${{ steps.metadata.outputs.tags }}
