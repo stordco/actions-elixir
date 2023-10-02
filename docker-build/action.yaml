@@ -213,7 +213,7 @@ runs:
 
     - id: metadata
       name: Get Metadata
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v5
       with:
         flavor: |
           latest=auto
