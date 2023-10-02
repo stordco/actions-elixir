@@ -141,7 +141,13 @@ runs:
           --auth-key "${{ inputs.oban-token }}"
       shell: bash
 
-    - if: steps.cache.outputs.cache-hit != 'true'
+    - if: github.run_attempt != '1'
+      name: Clean Dependencies
+      run: |
+        mix deps.clean --all
+        mix clean
+
+    - if: github.run_attempt != '1' || steps.cache.outputs.cache-hit != 'true'
       name: Install Dependencies
       run: mix deps.get
       shell: bash
