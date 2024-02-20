@@ -2,6 +2,13 @@
   "separate-pull-requests": false,
   "draft-pull-request": true,
   "packages": {
-    ".": {}
+    ".": {
+      "release-type": "simple",
+      "extra-files": [
+        "docker-build/README.md",
+        "setup/README.md",
+        "README.md"
+      ]
+    }
   }
 }
