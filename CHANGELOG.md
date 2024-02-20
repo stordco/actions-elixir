@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://github.com/stordco/actions-elixir/compare/v1.3.0...v1.4.0) (2024-02-20)
+
+
+### Features
+
+* clean dependencies on reruns ([#31](https://github.com/stordco/actions-elixir/issues/31)) ([2b68339](https://github.com/stordco/actions-elixir/commit/2b6833955d256c29a74692342decc7a9ed3432ea))
+* remove tool versions action with new native setup-beam feature ([#37](https://github.com/stordco/actions-elixir/issues/37)) ([ba2cddb](https://github.com/stordco/actions-elixir/commit/ba2cddbe478a8f7692e5b38d2c3deb9a6b9055b4))
+
+
+### Bug Fixes
+
+* update release please configuration ([#39](https://github.com/stordco/actions-elixir/issues/39)) ([25975e5](https://github.com/stordco/actions-elixir/commit/25975e5902c1712d21219ae130531f563ebb0738))
+
 ## [1.3.0](https://github.com/stordco/actions-elixir/compare/v1.2.3...v1.3.0) (2023-08-28)
 
 
