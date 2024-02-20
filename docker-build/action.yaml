@@ -15,9 +15,8 @@ inputs:
       that the github-token and hex-token will automatically be set if
       passed in.
     required: false
-    type: string
   cache:
-    default: true
+    default: "true"
     description: >-
       (Optional) Enables caching built docker layers in the GitHub actions
       cache. This is highly recommended to speed up builds. Note, if you are
@@ -25,39 +24,33 @@ inputs:
       are not sending files that would break layer caching, like the .git
       folder.
     required: false
-    type: boolean
   context:
     default: "."
     description: >-
       (Optional) The build context to use when building the docker image.
     required: false
-    type: string
   file:
     default: Dockerfile
     description: >-
       (Optional) The path to the Dockerfile we are building.
     required: false
-    type: string
   github-token:
     default: ${{ github.token }}
     description: >-
       (Optional) Used to setup mix for pulling private packages from GitHub.
       This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`.
     required: false
-    type: string
   hex-organization:
     default: stord
     description: >-
       (Optional) Hex organization when authenticating. By default this will
       be the Stord hex organization.
     required: false
-    type: string
   hex-token:
     description: >-
       (Optional) Used to setup mix for pulling private packages from the
       hex organization. This is usually `secrets.HEX_API_KEY`.
     required: false
-    type: string
   images:
     description: >-
       (Optional) A list of docker images to use when building and
@@ -65,49 +58,41 @@ inputs:
       For example, if you are building `stordco/test-app`, the image will
       be `ghcr.io/stordco/test-app`.
     required: false
-    type: string
   labels:
     description: >-
       (Optional) A list of labels to be added to the default ones when
       pushing the image.
     required: false
-    type: string
   oban-fingerprint:
     description: >-
       (Optional) Public key for fetching the oban pro repository data.
       This is usually refered to as OBAN_KEY_FINTERPRINT in documentation.
     required: false
-    type: string
   oban-token:
     description: >-
       (Optional) Oban pro license key.
     required: false
-    type: string
   platforms:
     default: linux/amd64
     description: >-
       (Optional) List of target platforms for build.
     required: false
-    type: string
   push:
-    default: false
+    default: "false"
     description: >-
       (Optional) Push the final built image to the set registry.
     required: false
-    type: boolean
   secrets:
     description: >-
       (Optional) A list of extra secrets to pass to the build step. Note
       that the github-token and hex-token will automatically be set if
       passed in.
     required: false
-    type: string
   tags:
     description: >-
       (Optional) A list of tags to be added to the default ones when
       pushing the image.
     required: false
-    type: string
 
 outputs:
   digest:
@@ -256,13 +241,13 @@ runs:
         BUILD_OUTPUT: ${{ steps.metadata.outputs.json }}
       with:
         script: |
-            const metadata = JSON.parse(process.env.BUILD_OUTPUT)
-            const shaUrl = metadata.tags.find((t) => t.includes(':sha-'))
+          const metadata = JSON.parse(process.env.BUILD_OUTPUT)
+          const shaUrl = metadata.tags.find((t) => t.includes(':sha-'))
 
-            if (shaUrl == null) {
-              core.error('Unable to find sha tag of image')
-            } else {
-              const [image, tag] = shaUrl.split(':')
-              core.setOutput('image', image)
-              core.setOutput('tag', tag)
-            }
+          if (shaUrl == null) {
+            core.error('Unable to find sha tag of image')
+          } else {
+            const [image, tag] = shaUrl.split(':')
+            core.setOutput('image', image)
+            core.setOutput('tag', tag)
+          }

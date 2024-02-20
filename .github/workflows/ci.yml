@@ -1,0 +1,49 @@
+---
+name: CI
+
+on:
+  pull_request:
+    types:
+      - edited
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  setup-action-explicit:
+    name: Setup Action Explicit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./setup/action.yaml
+        with:
+          elixir: 1.15.4-otp-25
+          erlang: 25.3.2.5
+
+      - name: Check
+        run: elixir --version
+
+  setup-action-tools-file:
+    name: Setup Action Tools File
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Tools File
+        run: |
+          touch .tool-versions
+          echo "elixir 1.15.4-otp-25\n" > .tool-verions
+          echo "erlang 25.3.2.5\n" > .tool-versions
+          cat .tool-versions
+
+      - name: Setup
+        uses: ./setup/action.yaml
+
+      - name: Check
+        run: elixir --version
