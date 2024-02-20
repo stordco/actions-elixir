@@ -96,7 +96,7 @@ runs:
       with:
         otp-version: ${{ inputs.otp-version }}
         elixir-version: ${{ inputs.elixir-version }}
-        version-file: ${{ !inputs.elixir-version && '.tool-verions' || null }}
+        version-file: ${{ !inputs.elixir-version && '.tool-versions' || null }}
         version-type: strict
 
     - id: cache
