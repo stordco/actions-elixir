@@ -18,7 +18,6 @@ inputs:
       By default this will cache the build and deps folder allowing for faster
       rebuilding.
     required: false
-    type: string
   cache-name:
     default: ${{ github.job }}
     description: >-
@@ -30,58 +29,49 @@ inputs:
       settings, like credo and dialyzer, and therefor have different files
       cached.
     required: false
-    type: string
   cache-version:
     default: v1
     description: >-
       (Optional) A version string to include in the cache key. You can change
       this value to bust the cache if there is an error.
     required: false
-    type: string
   elixir-version:
     description: >-
       (Optional) Version range or exact version of Elixir to use. If this is
       not set, we attempt to read the "elixir" field from the .tool-versions
       file.
     required: false
-    type: string
   github-token:
     description: >-
       (Optional) Used to setup mix for pulling private packages from GitHub.
       This is usually `secrets.GH_PERSONAL_ACCESS_TOKEN`.
     required: false
-    type: string
   hex-organization:
     default: stord
     description: >-
       (Optional) Hex organization when authenticating. By default this will
       be the Stord hex organization.
     required: false
-    type: string
   hex-token:
     description: >-
       (Optional) Used to setup mix for pulling private packages from the
       hex organization. This is usually `secrets.HEX_API_KEY`.
     required: false
-    type: string
   oban-fingerprint:
     description: >-
       (Optional) Public key for fetching the oban pro repository data.
       This is usually refered to as OBAN_KEY_FINTERPRINT in documentation.
     required: false
-    type: string
   oban-token:
     description: >-
       (Optional) Oban pro license key.
     required: false
-    type: string
   otp-version:
     description: >-
       (Optional) Version range or exact version of Erlang/OTP to use. If this
       is not set, we attempt to read the "erlang" field from the .tool-versions
       file.
     required: false
-    type: string
 
 outputs:
   cache-hit:
@@ -100,17 +90,14 @@ outputs:
 runs:
   using: composite
   steps:
-    - id: versions
-      if: ${{ !inputs.elixir-version || !inputs.otp-version }}
-      name: Read .tool-versions
-      uses: marocchino/tool-versions-action@608d0ecb8f01e467223f0a854ead7d3fc784b540
-
     - id: beam
       name: Install Elixir
       uses: erlef/setup-beam@v1
       with:
-        otp-version: ${{ inputs.otp-version || steps.versions.outputs.erlang }}
-        elixir-version: ${{ inputs.elixir-version || steps.versions.outputs.elixir }}
+        otp-version: ${{ inputs.otp-version }}
+        elixir-version: ${{ inputs.elixir-version }}
+        version-file: ${{ !inputs.elixir-version && '.tool-versions' || null }}
+        version-type: strict
 
     - id: cache
       name: Cache
