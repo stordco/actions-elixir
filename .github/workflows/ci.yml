@@ -38,8 +38,8 @@ jobs:
       - name: Create Tools File
         run: |
           touch .tool-versions
-          echo "elixir 1.15.4-otp-25\n" > .tool-verions
-          echo "erlang 25.3.2.5\n" > .tool-versions
+          echo "elixir 1.15.4-otp-25" >> .tool-versions
+          echo "erlang 25.3.2.5" >> .tool-versions
           cat .tool-versions
 
       - name: Setup
