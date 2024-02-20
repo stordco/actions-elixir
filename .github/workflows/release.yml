@@ -16,13 +16,9 @@ jobs:
         name: Release
         uses: google-github-actions/release-please-action@v4
         with:
-          release-type: node
-          package-name: actions-elixir
           token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          extra-files: |
-            docker-build/README.md
-            setup/README.md
-            README.md
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
 
       - if: ${{ steps.release.outputs.release_created }}
         name: Checkout
