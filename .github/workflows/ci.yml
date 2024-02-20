@@ -22,7 +22,7 @@ jobs:
         uses: ./setup
         with:
           elixir-version: 1.15.4-otp-25
-          erlang-version: 25.3.2.5
+          otp-version: 25.3.2.5
 
       - name: Check
         run: elixir --version
