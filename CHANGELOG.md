@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/stordco/actions-elixir/compare/v1.4.0...v1.4.1) (2024-02-20)
+
+
+### Bug Fixes
+
+* add shell to dep clean ([ceef4c5](https://github.com/stordco/actions-elixir/commit/ceef4c5e8c53601e7665de9ab95ac230010af967))
+
 ## [1.4.0](https://github.com/stordco/actions-elixir/compare/v1.3.0...v1.4.0) (2024-02-20)
 
 
