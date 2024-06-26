@@ -228,7 +228,7 @@ runs:
 
     - id: build
       name: Build
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         build-args: ${{ steps.inputs.outputs.build-args }}
         cache-from: ${{ steps.inputs.outputs.cache-from }}
