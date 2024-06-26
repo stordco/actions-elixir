@@ -63,6 +63,13 @@ inputs:
       (Optional) A list of labels to be added to the default ones when
       pushing the image.
     required: false
+  load:
+    default: false
+    description: >-
+      (Optional) When set to true, the `load` input acts as a shorthand for --output=type=docker,
+      automatically loading the single-platform build result into the local Docker images.
+      This is useful for testing the image locally to the GHA instance.
+    required: false
   oban-fingerprint:
     description: >-
       (Optional) Public key for fetching the oban pro repository data.
@@ -233,6 +240,7 @@ runs:
         push: ${{ inputs.push }}
         secrets: ${{ steps.inputs.outputs.secrets }}
         tags: ${{ steps.metadata.outputs.tags }}
+        load: ${{ inputs.load }}
 
     - id: outputs
       name: Get Outputs
