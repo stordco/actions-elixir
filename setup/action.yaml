@@ -96,8 +96,13 @@ runs:
       with:
         otp-version: ${{ inputs.otp-version }}
         elixir-version: ${{ inputs.elixir-version }}
+        install-hex: true
+        install-rebar: true
         version-file: ${{ !inputs.elixir-version && '.tool-versions' || null }}
         version-type: strict
+      env:
+        HEXPM_MIRRORS: https://repo.hex.pm,https://cdn.jsdelivr.net/hex
+        HEXPM_TIMEOUT: 60000
 
     - id: cache
       name: Cache
