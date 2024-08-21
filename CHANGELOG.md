@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/stordco/actions-elixir/compare/v1.4.1...v1.5.0) (2024-08-21)
+
+
+### Features
+
+* setup hexpm mirror and timeout for better reliability ([#44](https://github.com/stordco/actions-elixir/issues/44)) ([9b7f28a](https://github.com/stordco/actions-elixir/commit/9b7f28a0a943fefbd36732be1141f9e73c6b4dbf))
+
 ## [1.4.1](https://github.com/stordco/actions-elixir/compare/v1.4.0...v1.4.1) (2024-02-20)
 
 
