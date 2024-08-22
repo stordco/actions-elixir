@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/stordco/actions-elixir/compare/v1.5.0...v1.5.1) (2024-08-22)
+
+
+### Bug Fixes
+
+* remove cache restore key causing incorrect restore files ([#46](https://github.com/stordco/actions-elixir/issues/46)) ([0590eca](https://github.com/stordco/actions-elixir/commit/0590eca9c479112d9a29b22352910db160ebfe6e))
+
 ## [1.5.0](https://github.com/stordco/actions-elixir/compare/v1.4.1...v1.5.0) (2024-08-21)
 
 
