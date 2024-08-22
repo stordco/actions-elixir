@@ -112,7 +112,6 @@ runs:
         restore-keys: |
           elixir-setup-${{ inputs.cache-version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache-name }}-${{ hashFiles('mix.lock') }}-
           elixir-setup-${{ inputs.cache-version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-${{ inputs.cache-name }}-
-          elixir-setup-${{ inputs.cache-version }}-elixir-${{ steps.beam.outputs.elixir-version }}-otp-${{ steps.beam.outputs.otp-version }}-
         path: ${{ inputs.cache-path }}
 
     - if: ${{ inputs.github-token }}
