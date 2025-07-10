@@ -13,7 +13,7 @@ Once you have those set up, you can drop this action in. For simple usage, you s
 <!-- {x-release-please-start-version} -->
 ```yaml
 - name: Build Docker
-  uses: stordco/actions-elixir/docker-build@v1.5.1
+  uses: stordco/actions-elixir/docker-build@v1.5.2
 ```
 <!-- {x-release-please-end} -->
 
@@ -22,7 +22,7 @@ Most of the time when you build a docker image, you'll want to push it as well. 
 <!-- {x-release-please-start-version} -->
 ```yaml
 - name: Build Docker
-  uses: stordco/actions-elixir/docker-build@v1.5.1
+  uses: stordco/actions-elixir/docker-build@v1.5.2
   with:
     push: true
 ```
@@ -33,7 +33,7 @@ If you want to change the default image, or even add multiple, you can do so wit
 <!-- {x-release-please-start-version} -->
 ```yaml
 - name: Build Docker
-  uses: stordco/actions-elixir/docker-build@v1.5.1
+  uses: stordco/actions-elixir/docker-build@v1.5.2
   with:
     images: |
       ghcr.io/custom-owner/custom-repo
@@ -46,7 +46,7 @@ Lastly, you'll probably want to install some dependencies from our GitHub organi
 <!-- {x-release-please-start-version} -->
 ```yaml
 - name: Build Docker
-  uses: stordco/actions-elixir/docker-build@v1.5.1
+  uses: stordco/actions-elixir/docker-build@v1.5.2
   with:
     github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
     hex-token: ${{ secrets.HEX_API_KEY }}
