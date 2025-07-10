@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/stordco/actions-elixir/compare/v1.5.1...v1.5.2) (2025-07-10)
+
+
+### Bug Fixes
+
+* pin setup-beam action to specific commit ([#48](https://github.com/stordco/actions-elixir/issues/48)) ([6641ea3](https://github.com/stordco/actions-elixir/commit/6641ea3b7f00160ade318cada0c6b6db782cb9e4))
+
 ## [1.5.1](https://github.com/stordco/actions-elixir/compare/v1.5.0...v1.5.1) (2024-08-22)
 
 
